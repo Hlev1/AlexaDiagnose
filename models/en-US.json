@@ -1,0 +1,22 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "minecraft helper",
+      "intents": [
+        {
+          "name": "AMAZON.RepeatIntent"
+        },
+        {
+          "name": "AMAZON.HelpIntent"
+        },
+        {
+          "name": "AMAZON.StopIntent"
+        },
+        {
+          "name": "AMAZON.CancelIntent"
+        }
+      ],
+      "types": []
+    }
+  }
+}

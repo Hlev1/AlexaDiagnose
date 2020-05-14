@@ -1,0 +1,35 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "minecraft helper",
+      "intents": [
+        {
+          "name": "CaptureAgeIntent",
+          "slots": [
+            {
+              "name":  "age",
+              "type":  "AMAZON.NUMBER"
+            }
+          ],
+          "samples": [
+            "I am {age} years old",
+            "I am {age}"
+          ]
+        },
+        {
+          "name": "AMAZON.RepeatIntent"
+        },
+        {
+          "name": "AMAZON.HelpIntent"
+        },
+        {
+          "name": "AMAZON.StopIntent"
+        },
+        {
+          "name": "AMAZON.CancelIntent"
+        }
+      ],
+      "types": []
+    }
+  }
+}
