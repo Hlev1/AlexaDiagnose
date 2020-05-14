@@ -1,8 +1,29 @@
 {
   "interactionModel": {
     "languageModel": {
-      "invocationName": "minecraft helper",
+      "invocationName": "diagnose",
       "intents": [
+        {
+          "name": "AgeIntent",
+          "slots": [
+            {
+              "name":  "age",
+              "type":  "AMAZON.NUMBER"
+            }
+          ],
+          "samples": [
+            "{age}",
+            "I am {age}",
+            "I'm {age}",
+            "I am {age} years",
+            "I'm {age} years",
+            "I am {age} years old",
+            "I'm {age} years old",
+            "I was born {age} years ago",
+            "I am the old age of {age}",
+            "I am the ripe old age of {age}"
+          ]
+        },
         {
           "name": "AMAZON.RepeatIntent"
         },
