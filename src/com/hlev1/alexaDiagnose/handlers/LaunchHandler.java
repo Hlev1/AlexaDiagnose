@@ -32,8 +32,8 @@ public class LaunchHandler implements LaunchRequestHandler {
     @Override
     public Optional<Response> handle(HandlerInput handlerInput, LaunchRequest launchRequest) {
         final ResourceBundle messages = SkillUtils.getResourceBundle(handlerInput, "Messages");
-        final String item = SkillUtils.getResourceBundle(handlerInput, "Recipes").getKeys().nextElement().replaceAll("_", " ");
-        final String speechText = String.format(messages.getString("WELCOME_MESSAGE"), messages.getString("SKILL_NAME"), item);
+
+        final String speechText = String.format(messages.getString("WELCOME_MESSAGE"), messages.getString("SKILL_NAME"));
         final String repromptText = messages.getString("WELCOME_REPROMPT");
 
         return handlerInput.getResponseBuilder()
