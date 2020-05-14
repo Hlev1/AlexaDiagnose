@@ -18,7 +18,6 @@ public class HowToStreamHandler extends SkillStreamHandler {
                 .addRequestHandlers(
                         new LaunchHandler(),
                         new HelpIntentHandler(),
-                        new RecipeIntentHandler(),
                         new RepeatIntentHandler(),
                         new ExitIntentHandler(),
                         new ErrorHandler(),
