@@ -3,13 +3,7 @@ package com.hlev1.alexaDiagnose;
 import com.amazon.ask.Skill;
 import com.amazon.ask.SkillStreamHandler;
 import com.amazon.ask.Skills;
-import com.hlev1.alexaDiagnose.handlers.ErrorHandler;
-import com.hlev1.alexaDiagnose.handlers.ExitIntentHandler;
-import com.hlev1.alexaDiagnose.handlers.HelpIntentHandler;
-import com.hlev1.alexaDiagnose.handlers.LaunchHandler;
-import com.hlev1.alexaDiagnose.handlers.RecipeIntentHandler;
-import com.hlev1.alexaDiagnose.handlers.RepeatIntentHandler;
-import com.hlev1.alexaDiagnose.handlers.SessionEndedHandler;
+import com.hlev1.alexaDiagnose.handlers.*;
 
 public class HowToStreamHandler extends SkillStreamHandler {
 
@@ -18,6 +12,8 @@ public class HowToStreamHandler extends SkillStreamHandler {
                 .addRequestHandlers(
                         new LaunchHandler(),
                         new HelpIntentHandler(),
+                        new RecipeIntentHandler(),
+                        new AgeIntentHandler(),
                         new RepeatIntentHandler(),
                         new ExitIntentHandler(),
                         new ErrorHandler(),
