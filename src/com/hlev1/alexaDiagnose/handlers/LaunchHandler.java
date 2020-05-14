@@ -15,6 +15,7 @@ package com.hlev1.alexaDiagnose.handlers;
 
 import com.amazon.ask.dispatcher.request.handler.HandlerInput;
 import com.amazon.ask.dispatcher.request.handler.impl.LaunchRequestHandler;
+import com.amazon.ask.model.Intent;
 import com.hlev1.alexaDiagnose.utils.SkillUtils;
 import com.amazon.ask.model.LaunchRequest;
 import com.amazon.ask.model.Response;
@@ -34,11 +35,13 @@ public class LaunchHandler implements LaunchRequestHandler {
         final ResourceBundle messages = SkillUtils.getResourceBundle(handlerInput, "Messages");
 
         final String speechText = String.format(messages.getString("WELCOME_MESSAGE"), messages.getString("SKILL_NAME"));
-        final String repromptText = messages.getString("WELCOME_REPROMPT");
+        final String repromptText = messages.getString("AGE_REPROMPT");
 
+        Intent chainedIntent = Intent.builder().withName("BeginDiagnosisIntent").build();
         return handlerInput.getResponseBuilder()
-                .withSpeech(speechText)
-                .withReprompt(repromptText)
+                .addDelegateDirective(chainedIntent)
+                //.withSpeech(speechText)
+                //.withReprompt(repromptText)
                 .build();
     }
 }
