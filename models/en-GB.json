@@ -4,11 +4,15 @@
       "invocationName": "diagnose",
       "intents": [
         {
-          "name": "AgeIntent",
+          "name": "BeginDiagnosisIntent",
           "slots": [
             {
-              "name":  "age",
-              "type":  "AMAZON.NUMBER"
+              "name": "age",
+              "type": "AMAZON.NUMBER"
+            },
+            {
+              "name": "gender",
+              "type": "GENDER"
             }
           ],
           "samples": [
@@ -21,7 +25,8 @@
             "I'm {age} years old",
             "I was born {age} years ago",
             "I am the old age of {age}",
-            "I am the ripe old age of {age}"
+            "I am the ripe old age of {age}",
+            "I am {gender}"
           ]
         },
         {
@@ -37,7 +42,80 @@
           "name": "AMAZON.CancelIntent"
         }
       ],
-      "types": []
-    }
+      "types": [
+        {
+          "name": "GENDER",
+          "values": [
+            {
+              "name": {
+                "value": "female",
+                "synonyms": [
+                  "girl",
+                  "woman"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "male",
+                "synonyms": [
+                  "boy",
+                  "man"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "dialog": {
+      "delegationStrategy": "ALWAYS",
+      "intents": [
+        {
+          "name": "BeginDiagnosisIntent",
+          "prompts": {},
+          "slots": [
+            {
+              "name": "age",
+              "type": "AMAZON.NUMBER",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Slot.1323207333291.854898796228"
+              }
+            },
+            {
+              "name": "gender",
+              "type": "GENDER",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Slot.1323207333291.563366041005"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "prompts": [
+      {
+        "id": "Elicit.Slot.1323207333291.854898796228",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "How old are you?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.1323207333291.563366041005",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Are you male of female?"
+          }
+        ]
+      }
+    ]
   }
 }
