@@ -4,24 +4,71 @@
       "invocationName": "diagnose",
       "intents": [
         {
-          "name": "AgeIntent",
+          "name": "BeginDiagnosisIntent",
           "slots": [
             {
-              "name":  "age",
-              "type":  "AMAZON.NUMBER"
+              "name": "age",
+              "type": "AMAZON.NUMBER"
+            },
+            {
+              "name": "gender",
+              "type": "GENDER"
             }
           ],
           "samples": [
-            "{age}",
+            "I am {age}"
+          ]
+        },
+        {
+          "name": "ProfileSelectorIntent",
+          "slots": [
+            {
+              "name": "profile_name",
+              "type": "AMAZON.US_FIRST_NAME"
+            },
+            {
+              "name": "profile_surname",
+              "type": "AMAZON.US_LAST_NAME"
+            }
+          ],
+          "samples": [
+            "{profile_name} {profile_surname}",
+            "{profile_name}",
+            "This is {profile_name}",
+            "This is {profile_name} {profile_surname}",
+            "I am {profile_name}",
+            "I am {profile_name} {profile_surname}",
+            "My name is {profile_name}",
+            "My name is {profile_name} {profile_surname}",
+            "You are talking to {profile_name}",
+            "You are talking to {profile_name} {profile_surname}",
+            "That would be {profile_name}",
+            "That would be {profile_name} {profile_surname}"
+          ]
+        },
+        {
+          "name": "CreateProfileIntent",
+          "slots": [
+            {
+              "name": "profile_name",
+              "type": "AMAZON.US_FIRST_NAME"
+            },
+            {
+              "name": "profile_surname",
+              "type": "AMAZON.US_LAST_NAME"
+            },
+            {
+              "name": "age",
+              "type": "AMAZON.NUMBER"
+            },
+            {
+              "name": "gender",
+              "type": "GENDER"
+            }
+          ],
+          "samples": [
             "I am {age}",
-            "I'm {age}",
-            "I am {age} years",
-            "I'm {age} years",
-            "I am {age} years old",
-            "I'm {age} years old",
-            "I was born {age} years ago",
-            "I am the old age of {age}",
-            "I am the ripe old age of {age}"
+            "I am {gender}"
           ]
         },
         {
@@ -37,7 +84,131 @@
           "name": "AMAZON.CancelIntent"
         }
       ],
-      "types": []
-    }
+      "types": [
+        {
+          "name": "GENDER",
+          "values": [
+            {
+              "name": {
+                "value": "female",
+                "synonyms": [
+                  "girl",
+                  "woman"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "male",
+                "synonyms": [
+                  "boy",
+                  "man"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "dialog": {
+      "delegationStrategy": "ALWAYS",
+      "intents": [
+        {
+          "name": "BeginDiagnosisIntent",
+          "prompts": {},
+          "slots": [
+            {
+              "name": "age",
+              "type": "AMAZON.NUMBER",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Slot.1323207333291.854898796228"
+              }
+            },
+            {
+              "name": "gender",
+              "type": "GENDER",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Slot.1323207333291.563366041005"
+              }
+            }
+          ]
+        },
+        {
+          "name": "CreateProfileIntent",
+          "prompts": {},
+          "slots": [
+            {
+              "name": "profile_name",
+              "type": "AMAZON.US_FIRST_NAME",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Slot.1323207333291.563366041035"
+              }
+            },
+            {
+              "name": "profile_surname",
+              "type": "AMAZON.US_LAST_NAME",
+              "confirmationRequired": false,
+              "elicitationRequired": false,
+              "prompts": {
+                "elicitation": "Elicit.Slot.1323207333291.563366041035"
+              }
+            },
+            {
+              "name": "age",
+              "type": "AMAZON.NUMBER",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Slot.1323207333291.854898796228"
+              }
+            },
+            {
+              "name": "gender",
+              "type": "GENDER",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Slot.1323207333291.563366041005"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "prompts": [
+      {
+        "id": "Elicit.Slot.1323207333291.854898796228",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "How old are you?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.1323207333291.563366041005",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Are you male of female?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.1323207333291.563366041035",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "What is your name?"
+          }
+        ]
+      }
+    ]
   }
 }

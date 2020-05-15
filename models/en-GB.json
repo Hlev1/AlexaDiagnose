@@ -16,7 +16,16 @@
             }
           ],
           "samples": [
-            "I am {age}"
+            "begin diagnosis",
+            "begin diagnosis please",
+            "start my diagnosis",
+            "start my diagnosis please",
+            "diagnose me",
+            "diagnose me please",
+            "can you diagnose my symptoms",
+            "can you diagnose my symptoms please",
+            "can you diagnose me",
+            "can you diagnose me please"
           ]
         },
         {
