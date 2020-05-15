@@ -11,6 +11,8 @@ public class HowToStreamHandler extends SkillStreamHandler {
         return Skills.standard()
                 .addRequestHandlers(
                         new LaunchHandler(),
+                        new ProfileSelectorIntentHandler(),
+                        new CreateProfileIntentHandler(),
                         new HelpIntentHandler(),
                         new RecipeIntentHandler(),
                         new AgeIntentHandler(),
@@ -22,6 +24,8 @@ public class HowToStreamHandler extends SkillStreamHandler {
                 )
                 // Add your skill id below
                 // .withSkillId("")
+                //.withTableName("profiles")
+                //.withAutoCreateTable(true)
                 .build();
     }
 
