@@ -35,8 +35,6 @@ public class LaunchHandler implements LaunchRequestHandler {
         final ResourceBundle messages = SkillUtils.getResourceBundle(handlerInput, "Messages");
 
         String speechText = String.format(messages.getString("WELCOME_MESSAGE"), messages.getString("SKILL_NAME"));
-        String repromptText = messages.getString("FIND_PROFILE");
-        speechText += String.format(" %s", repromptText);
 
         //Intent chainedIntent = Intent.builder().withName("BeginDiagnosisIntent").build();
         return handlerInput.getResponseBuilder()

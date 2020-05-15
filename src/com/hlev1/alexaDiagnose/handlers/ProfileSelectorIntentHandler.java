@@ -22,22 +22,42 @@ public class ProfileSelectorIntentHandler implements IntentRequestHandler {
     public Optional<Response> handle(HandlerInput handlerInput, IntentRequest intentRequest) {
         Slot slot = intentRequest.getIntent().getSlots().get("profile_name");
         String name = slot.getValue();
-        //Map attr = handlerInput.getAttributesManager().getPersistentAttributes();
+        /*
+        Map persistent = handlerInput.getAttributesManager().getPersistentAttributes();
 
-        //if (attr.containsKey(name)){
-        //    return handlerInput.getResponseBuilder()
-        //            .withSpeech(String.format("Welcome %s.", slot.toString()))
-        //            .build();
-        //} else { // chain to create a new profile with the given name
+        if (persistent.containsKey(name)){
+
+            transferFromPersistent(intentRequest.getIntent(), handlerInput, name);
+            return handlerInput.getResponseBuilder()
+                    .withSpeech(String.format("Welcome %s. To begin your diagnosis, please say begin diagnosis", name))
+                    .build();
+
+        } else { // chain to create a new profile with the given name
+        }
+         */
+
         Intent createProfile = Intent.builder().withName("CreateProfileIntent")
-                .putSlotsItem("profile_name", slot)
-                .build();
+            .putSlotsItem("profile_name", slot)
+            .build();
 
         return handlerInput.getResponseBuilder()
                 .withSpeech(String.format("It looks like I dont have you in my records %s. Lets get you set up.", name))
                 .addDelegateDirective(createProfile)
                 .build();
-        //}
+    }
+
+    private void transferFromPersistent(Intent intent, HandlerInput handlerInput, String name) {
+        Map persistent = handlerInput.getAttributesManager().getPersistentAttributes();
+        Map session = handlerInput.getAttributesManager().getSessionAttributes();
+
+        String profileAge = persistent.get(String.format("%s_age", name)).toString();
+        String profileGender = persistent.get(String.format("%s_gender", name)).toString();
+
+        session.put("profile_name", name);
+        session.put(String.format("%s_age", name), profileAge);
+        session.put("gender", profileGender);
+
+        handlerInput.getAttributesManager().setSessionAttributes(session);
     }
 
 }
