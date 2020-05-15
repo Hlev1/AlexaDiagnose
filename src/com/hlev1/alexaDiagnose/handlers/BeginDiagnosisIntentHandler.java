@@ -18,17 +18,25 @@ public class BeginDiagnosisIntentHandler implements IntentRequestHandler {
     @Override
     public Optional<Response> handle(HandlerInput handlerInput, IntentRequest intentRequest) {
 
-        String dialogState = intentRequest.getDialogState().getValue().toString();
 
-        if (dialogState.equals("COMPLETED")) {
+        DialogState dialog = intentRequest.getDialogState();
+        if (dialog == null) { // We are not in a dialog, so delegate the dialog to Alexa
+            Intent currentIntent = intentRequest.getIntent();
+            return handlerInput.getResponseBuilder()
+                    .addDelegateDirective(currentIntent)
+                    .build();
+        }
+
+        if (!dialog.getValue().toString().equals("COMPLETED")) {
+            Intent currentIntent = intentRequest.getIntent();
+            return handlerInput.getResponseBuilder()
+                    .addDelegateDirective(currentIntent)
+                    .build();
+        } else {
+
             return handlerInput.getResponseBuilder()
                     .withSpeech("I have all the information I need.")
                     .build();
-        } else {
-            Intent currentIntent = intentRequest.getIntent();
-                return handlerInput.getResponseBuilder()
-                        .addDelegateDirective(currentIntent)
-                        .build();
         }
 
     }
