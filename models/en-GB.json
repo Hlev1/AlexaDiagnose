@@ -16,16 +16,44 @@
             }
           ],
           "samples": [
-            "{age}",
+            "I am {age}"
+          ]
+        },
+        {
+          "name": "ProfileSelectorIntent",
+          "slots": [
+            {
+              "name": "profile_name",
+              "type": "AMAZON.GB_FIRST_NAME"
+            }
+          ],
+          "samples": [
+            "{profile_name}",
+            "This is {profile_name}",
+            "I am {profile_name}",
+            "My name is {profile_name}",
+            "You are talking to {profile_name}",
+            "That would be {profile_name}"
+          ]
+        },
+        {
+          "name": "CreateProfileIntent",
+          "slots": [
+            {
+              "name": "profile_name",
+              "type": "AMAZON.GB_FIRST_NAME"
+            },
+            {
+              "name": "age",
+              "type": "AMAZON.NUMBER"
+            },
+            {
+              "name": "gender",
+              "type": "GENDER"
+            }
+          ],
+          "samples": [
             "I am {age}",
-            "I'm {age}",
-            "I am {age} years",
-            "I'm {age} years",
-            "I am {age} years old",
-            "I'm {age} years old",
-            "I was born {age} years ago",
-            "I am the old age of {age}",
-            "I am the ripe old age of {age}",
             "I am {gender}"
           ]
         },
@@ -94,6 +122,39 @@
               }
             }
           ]
+        },
+        {
+          "name": "CreateProfileIntent",
+          "prompts": {},
+          "slots": [
+            {
+              "name": "profile_name",
+              "type": "AMAZON.GB_FIRST_NAME",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Slot.1323207333291.563366041035"
+              }
+            },
+            {
+              "name": "age",
+              "type": "AMAZON.NUMBER",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Slot.1323207333291.854898796228"
+              }
+            },
+            {
+              "name": "gender",
+              "type": "GENDER",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Slot.1323207333291.563366041005"
+              }
+            }
+          ]
         }
       ]
     },
@@ -113,6 +174,15 @@
           {
             "type": "PlainText",
             "value": "Are you male of female?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.1323207333291.563366041035",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "What is your name?"
           }
         ]
       }
