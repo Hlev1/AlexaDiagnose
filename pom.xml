@@ -28,12 +28,33 @@
         <developerConnection>scm:git:https://github.com/amzn/alexa-skills-kit-java.git</developerConnection>
         <url>https://github.com/amzn/alexa-skills-kit-java.git</url>
     </scm>
+
     <dependencies>
         <!-- https://mvnrepository.com/artifact/com.amazon.alexa/ask-sdk -->
         <dependency>
             <groupId>com.amazon.alexa</groupId>
             <artifactId>ask-sdk</artifactId>
             <version>2.16.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.amazon.alexa</groupId>
+            <artifactId>ask-sdk-dynamodb-persistence-adapter</artifactId>
+            <version>2.20.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>2.5.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.mashape.unirest</groupId>
+            <artifactId>unirest-java</artifactId>
+            <version>1.4.9</version>
         </dependency>
     </dependencies>
     <build>
