@@ -11,6 +11,25 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+/*
+    {
+      "name": "ProfileSelectorIntent",
+      "slots": [
+        {
+          "name": "profile_name",
+          "type": "AMAZON.GB_FIRST_NAME"
+        }
+      ],
+      "samples": [
+        "{profile_name}",
+        "This is {profile_name}",
+        "I am {profile_name}",
+        "My name is {profile_name}",
+        "You are talking to {profile_name}",
+        "That would be {profile_name}"
+      ]
+    }
+ */
 public class ProfileSelectorIntentHandler implements IntentRequestHandler {
 
     @Override
