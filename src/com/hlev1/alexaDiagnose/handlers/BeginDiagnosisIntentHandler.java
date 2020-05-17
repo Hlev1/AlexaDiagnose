@@ -11,11 +11,14 @@ import com.hlev1.alexaDiagnose.utils.SkillUtils;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import org.json.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.util.*;
+
+import static com.hlev1.alexaDiagnose.utils.SessionStorage.*;
 
 public class BeginDiagnosisIntentHandler implements IntentRequestHandler {
 
@@ -28,24 +31,8 @@ public class BeginDiagnosisIntentHandler implements IntentRequestHandler {
     public Optional<Response> handle(HandlerInput handlerInput, IntentRequest intentRequest) {
         DialogState dialog = intentRequest.getDialogState();
 
-        if (dialog.getValue().toString().equals("COMPLETED")) {
+        if (!dialog.getValue().toString().equals("COMPLETED")) {
 
-            Map slots = intentRequest.getIntent().getSlots();
-            Slot ageSlot = (Slot) slots.get("age");
-            Slot genderSlot = (Slot) slots.get("gender");
-
-
-            String age = ageSlot.getValue();
-            String gender = genderSlot.getValue();
-            try {
-                makePOST(Integer.parseInt(age), gender);
-            } catch (Exception e) {
-                System.out.println("");
-            }
-            return handlerInput.getResponseBuilder()
-                    .withSpeech("I have all the information I need.")
-                    .build();
-        } else {
             Intent thisIntent = intentRequest.getIntent();
             return handlerInput.getResponseBuilder()
                     .addDelegateDirective(thisIntent)
