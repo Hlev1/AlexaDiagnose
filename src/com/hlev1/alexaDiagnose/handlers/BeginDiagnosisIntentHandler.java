@@ -39,6 +39,54 @@ public class BeginDiagnosisIntentHandler implements IntentRequestHandler {
                     .build();
         }
 
+        String questionType = "";
+        JSONObject questionObj = null;
+
+        Map slots = intentRequest.getIntent().getSlots();
+        String age = ((Slot) slots.get("age")).getValue();
+        String gender = ((Slot) slots.get("gender")).getValue();
+
+        try {
+            JSONObject apiResponse = makePOST("https://api.infermedica.com/covid19/diagnosis",
+                                                Integer.parseInt(age), gender);
+            Boolean shouldStop = (Boolean) apiResponse.get("should_stop");
+
+            if (shouldStop) {
+                return handlerInput.getResponseBuilder()
+                        .withSpeech("Stopping diagnosis, implementation waiting")
+                        .build();
+            }
+
+            questionObj = (JSONObject) apiResponse.get("question");
+            questionType = (String) questionObj.get("type");
+
+            Map session = handlerInput.getAttributesManager().getSessionAttributes();
+            session.put(CONTINUOUS_QUESTION, questionObj);
+            handlerInput.getAttributesManager().setSessionAttributes(session);
+        } catch (Exception e) {
+            // ERROR HANDLING
+            questionType = "";
+            Boolean shouldStop = false;
+        }
+
+
+        switch (questionType) {
+            case "single":
+                break;
+            case "group_single":
+                break;
+            case "group_multiple":
+                GroupMultipleQIntentHandler handler = new GroupMultipleQIntentHandler();
+                return handler.handle(handlerInput, intentRequest);
+
+            default:
+                break;
+        }
+
+        Intent thisIntent = intentRequest.getIntent();
+        return handlerInput.getResponseBuilder()
+                .addDelegateDirective(thisIntent)
+                .build();
     }
 
     public JSONObject makePOST(int age, String gender) throws UnirestException, ParseException {
