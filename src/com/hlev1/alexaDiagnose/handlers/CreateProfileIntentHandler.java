@@ -10,6 +10,67 @@ import com.amazon.ask.model.Slot;
 import java.util.Map;
 import java.util.Optional;
 
+/*
+    {
+      "name": "CreateProfileIntent",
+      "slots": [
+        {
+          "name": "profile_name",
+          "type": "AMAZON.GB_FIRST_NAME"
+        },
+        {
+          "name": "age",
+          "type": "AMAZON.NUMBER"
+        },
+        {
+          "name": "gender",
+          "type": "GENDER"
+        }
+      ],
+      "samples": [
+        "I am {age}",
+        "I am {gender}"
+      ]
+    }
+
+
+    dialog: {
+        {
+          "name": "CreateProfileIntent",
+          "prompts": {},
+          "slots": [
+            {
+              "name": "profile_name",
+              "type": "AMAZON.GB_FIRST_NAME",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Slot.1323207333291.563366041035"
+              }
+            },
+            {
+              "name": "age",
+              "type": "AMAZON.NUMBER",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Slot.1323207333291.854898796228"
+              }
+            },
+            {
+              "name": "gender",
+              "type": "GENDER",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Slot.1323207333291.563366041005"
+              }
+            }
+          ]
+        }
+    }
+ */
+
 public class CreateProfileIntentHandler implements IntentRequestHandler {
 
     @Override
