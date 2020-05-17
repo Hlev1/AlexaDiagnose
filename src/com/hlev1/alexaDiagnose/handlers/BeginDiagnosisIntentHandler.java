@@ -89,10 +89,10 @@ public class BeginDiagnosisIntentHandler implements IntentRequestHandler {
                 .build();
     }
 
-    public JSONObject makePOST(int age, String gender) throws UnirestException, ParseException {
+    public JSONObject makePOST(String url, int age, String gender) throws UnirestException, ParseException {
         String json = String.format("{\n    \"sex\": \"%s\",\n    \"age\": %d,\n    \"evidence\": []\n}", gender, age);
 
-        HttpResponse<String> response = Unirest.post("https://api.infermedica.com/covid19/diagnosis")
+        HttpResponse<String> response = Unirest.post(url)
                 .header("Content-Type", "application/json")
                 .header("App-Id", "bd3cbf8c")
                 .header("App-Key", "48a6449979b3156bda8756b746860788")
