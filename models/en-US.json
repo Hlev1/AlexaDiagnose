@@ -16,7 +16,16 @@
             }
           ],
           "samples": [
-            "I am {age}"
+            "begin diagnosis",
+            "begin diagnosis please",
+            "start my diagnosis",
+            "start my diagnosis please",
+            "diagnose me",
+            "diagnose me please",
+            "can you diagnose my symptoms",
+            "can you diagnose my symptoms please",
+            "can you diagnose me",
+            "can you diagnose me please"
           ]
         },
         {
@@ -24,26 +33,16 @@
           "slots": [
             {
               "name": "profile_name",
-              "type": "AMAZON.US_FIRST_NAME"
-            },
-            {
-              "name": "profile_surname",
-              "type": "AMAZON.US_LAST_NAME"
+              "type": "AMAZON.GB_FIRST_NAME"
             }
           ],
           "samples": [
-            "{profile_name} {profile_surname}",
             "{profile_name}",
             "This is {profile_name}",
-            "This is {profile_name} {profile_surname}",
             "I am {profile_name}",
-            "I am {profile_name} {profile_surname}",
             "My name is {profile_name}",
-            "My name is {profile_name} {profile_surname}",
             "You are talking to {profile_name}",
-            "You are talking to {profile_name} {profile_surname}",
-            "That would be {profile_name}",
-            "That would be {profile_name} {profile_surname}"
+            "That would be {profile_name}"
           ]
         },
         {
@@ -51,11 +50,7 @@
           "slots": [
             {
               "name": "profile_name",
-              "type": "AMAZON.US_FIRST_NAME"
-            },
-            {
-              "name": "profile_surname",
-              "type": "AMAZON.US_LAST_NAME"
+              "type": "AMAZON.GB_FIRST_NAME"
             },
             {
               "name": "age",
@@ -82,6 +77,33 @@
         },
         {
           "name": "AMAZON.CancelIntent"
+        },
+        {
+          "name": "GroupMultipleQIntent",
+          "slots": [
+
+          ],
+          "samples": [
+
+          ]
+        },
+        {
+          "name": "GroupSingleQIntent",
+          "slots": [
+
+          ],
+          "samples": [
+
+          ]
+        },
+        {
+          "name": "SingleQIntent",
+          "slots": [
+
+          ],
+          "samples": [
+
+          ]
         }
       ],
       "types": [
@@ -143,18 +165,9 @@
           "slots": [
             {
               "name": "profile_name",
-              "type": "AMAZON.US_FIRST_NAME",
+              "type": "AMAZON.GB_FIRST_NAME",
               "confirmationRequired": false,
               "elicitationRequired": true,
-              "prompts": {
-                "elicitation": "Elicit.Slot.1323207333291.563366041035"
-              }
-            },
-            {
-              "name": "profile_surname",
-              "type": "AMAZON.US_LAST_NAME",
-              "confirmationRequired": false,
-              "elicitationRequired": false,
               "prompts": {
                 "elicitation": "Elicit.Slot.1323207333291.563366041035"
               }
