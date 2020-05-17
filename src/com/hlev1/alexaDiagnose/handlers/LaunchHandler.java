@@ -19,9 +19,12 @@ import com.amazon.ask.model.Intent;
 import com.hlev1.alexaDiagnose.utils.SkillUtils;
 import com.amazon.ask.model.LaunchRequest;
 import com.amazon.ask.model.Response;
+import org.json.simple.JSONArray;
 
 import java.util.Optional;
 import java.util.ResourceBundle;
+
+import static com.hlev1.alexaDiagnose.utils.SessionStorage.*;
 
 public class LaunchHandler implements LaunchRequestHandler {
 
