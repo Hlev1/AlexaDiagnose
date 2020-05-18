@@ -28,6 +28,22 @@ public class YesNoIntentHandler implements IntentRequestHandler {
         // If the session storage contains a just asked question id. This intent handler has
         // been caught because the user has replied to a question. We must record the answer
         // to the question and check to see if we need to ask another question.
+        if (session.containsKey(JUST_ASKED)) {
+            String qId = (String) session.remove(JUST_ASKED);
+            String answer = intentRequest.getIntent().getName().equals("AMAZON.YesIntent") ? "present" : "absent";
+
+            JSONArray evidence = (JSONArray) session.getOrDefault(EVIDENCE, new JSONArray());
+            JSONObject newEvidence = new JSONObject();
+            newEvidence.put("id", qId);
+            newEvidence.put("choice_id", answer);
+
+            evidence.add(newEvidence);
+            // if the evidence.size() is greater than 1, that means that there was previous evidence saved.
+            // And so we do not need to put it back into the session because it has already been updated.
+            if (evidence.size() <= 1) {
+                session.put(EVIDENCE, evidence);
+            }
+        }
 
         // Ask another question
         ArrayList listOfQuestions = (ArrayList) session.get(CONTINUOUS_QUESTION);
