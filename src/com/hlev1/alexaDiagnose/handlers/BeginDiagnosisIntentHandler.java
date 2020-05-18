@@ -11,8 +11,8 @@ import com.hlev1.alexaDiagnose.utils.SkillUtils;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import org.json.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
@@ -30,6 +30,7 @@ public class BeginDiagnosisIntentHandler implements IntentRequestHandler {
     @Override
     public Optional<Response> handle(HandlerInput handlerInput, IntentRequest intentRequest) {
         DialogState dialog = intentRequest.getDialogState();
+        Map session = handlerInput.getAttributesManager().getSessionAttributes();
 
         if (!dialog.getValue().toString().equals("COMPLETED")) {
 
@@ -41,6 +42,7 @@ public class BeginDiagnosisIntentHandler implements IntentRequestHandler {
 
         String questionType = "";
         JSONObject questionObj = null;
+        JSONArray listOfQuestions = null;
 
         Map slots = intentRequest.getIntent().getSlots();
         String age = ((Slot) slots.get("age")).getValue();
@@ -49,20 +51,18 @@ public class BeginDiagnosisIntentHandler implements IntentRequestHandler {
         try {
             JSONObject apiResponse = makePOST("https://api.infermedica.com/covid19/diagnosis",
                                                 Integer.parseInt(age), gender);
-            Boolean shouldStop = (Boolean) apiResponse.get("should_stop");
 
-            if (shouldStop) {
+            if ((Boolean) apiResponse.get("should_stop")) {
                 return handlerInput.getResponseBuilder()
                         .withSpeech("Stopping diagnosis, implementation waiting")
                         .build();
             }
 
             questionObj = (JSONObject) apiResponse.get("question");
+            listOfQuestions = (JSONArray) questionObj.get("items");
             questionType = (String) questionObj.get("type");
 
-            Map session = handlerInput.getAttributesManager().getSessionAttributes();
-            session.put(CONTINUOUS_QUESTION, questionObj);
-            handlerInput.getAttributesManager().setSessionAttributes(session);
+
         } catch (Exception e) {
             // ERROR HANDLING
             questionType = "";
@@ -76,9 +76,19 @@ public class BeginDiagnosisIntentHandler implements IntentRequestHandler {
             case "group_single":
                 break;
             case "group_multiple":
-                GroupMultipleQIntentHandler handler = new GroupMultipleQIntentHandler();
-                return handler.handle(handlerInput, intentRequest);
+                String questionOverview = "Please reply with yes or no to all of the following " +
+                        "statements that apply to you. ";
 
+                JSONObject nextQuestion = (JSONObject) listOfQuestions.remove(0);
+                String nextQuestionText = (String) nextQuestion.get("name");
+                String nextQuestionId = (String) nextQuestion.get("id");
+
+                session.put(CONTINUOUS_QUESTION, listOfQuestions);
+                session.put(JUST_ASKED, nextQuestionId);
+
+                return handlerInput.getResponseBuilder()
+                        .withSpeech(questionOverview + nextQuestionText)
+                        .build();
             default:
                 break;
         }
@@ -106,6 +116,7 @@ public class BeginDiagnosisIntentHandler implements IntentRequestHandler {
                 .header("cache-control", "no-cache")
                 .body(json)
                 .asString();
+
         JSONParser parser = new JSONParser();
         JSONObject obj = (JSONObject) parser.parse(response.getBody());
 
