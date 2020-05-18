@@ -25,49 +25,19 @@
             "can you diagnose my symptoms",
             "can you diagnose my symptoms please",
             "can you diagnose me",
-            "can you diagnose me please"
-          ]
-        },
-        {
-          "name": "ProfileSelectorIntent",
-          "slots": [
-            {
-              "name": "profile_name",
-              "type": "AMAZON.GB_FIRST_NAME"
-            }
-          ],
-          "samples": [
-            "{profile_name}",
-            "This is {profile_name}",
-            "I am {profile_name}",
-            "My name is {profile_name}",
-            "You are talking to {profile_name}",
-            "That would be {profile_name}"
-          ]
-        },
-        {
-          "name": "CreateProfileIntent",
-          "slots": [
-            {
-              "name": "profile_name",
-              "type": "AMAZON.GB_FIRST_NAME"
-            },
-            {
-              "name": "age",
-              "type": "AMAZON.NUMBER"
-            },
-            {
-              "name": "gender",
-              "type": "GENDER"
-            }
-          ],
-          "samples": [
-            "I am {age}",
-            "I am {gender}"
+            "can you diagnose me please",
+            "I am {gender}",
+            "I am a {gender}"
           ]
         },
         {
           "name": "AMAZON.RepeatIntent"
+        },
+        {
+          "name": "AMAZON.YesIntent"
+        },
+        {
+          "name": "AMAZON.NoIntent"
         },
         {
           "name": "AMAZON.HelpIntent"
@@ -81,10 +51,13 @@
         {
           "name": "GroupMultipleQIntent",
           "slots": [
-
+            {
+              "name": "answer",
+              "type": "BOOLEAN"
+            }
           ],
           "samples": [
-
+            "{answer}"
           ]
         },
         {
@@ -129,6 +102,48 @@
               }
             }
           ]
+        },
+        {
+          "name": "BOOLEAN",
+          "values": [
+            {
+              "name": {
+                "value": "present",
+                "synonyms": [
+                  "yes",
+                  "sure",
+                  "yeah",
+                  "I guess",
+                  "kind of",
+                  "I think so",
+                  "yes I think so"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "absent",
+                "synonyms": [
+                  "no",
+                  "nope",
+                  "nah",
+                  "not really",
+                  "I dont think so",
+                  "not that I am aware",
+                  "not that I am aware of",
+                  "not that I know of",
+                  "no I dont think so",
+                  "no not that I am aware",
+                  "no not that I am aware of",
+                  "no not that I know of",
+                  "nope I dont think so",
+                  "nope not that I am aware",
+                  "nope not that I am aware of",
+                  "nope not that I know of"
+                ]
+              }
+            }
+          ]
         }
       ]
     },
@@ -139,39 +154,6 @@
           "name": "BeginDiagnosisIntent",
           "prompts": {},
           "slots": [
-            {
-              "name": "age",
-              "type": "AMAZON.NUMBER",
-              "confirmationRequired": false,
-              "elicitationRequired": true,
-              "prompts": {
-                "elicitation": "Elicit.Slot.1323207333291.854898796228"
-              }
-            },
-            {
-              "name": "gender",
-              "type": "GENDER",
-              "confirmationRequired": false,
-              "elicitationRequired": true,
-              "prompts": {
-                "elicitation": "Elicit.Slot.1323207333291.563366041005"
-              }
-            }
-          ]
-        },
-        {
-          "name": "CreateProfileIntent",
-          "prompts": {},
-          "slots": [
-            {
-              "name": "profile_name",
-              "type": "AMAZON.GB_FIRST_NAME",
-              "confirmationRequired": false,
-              "elicitationRequired": true,
-              "prompts": {
-                "elicitation": "Elicit.Slot.1323207333291.563366041035"
-              }
-            },
             {
               "name": "age",
               "type": "AMAZON.NUMBER",
