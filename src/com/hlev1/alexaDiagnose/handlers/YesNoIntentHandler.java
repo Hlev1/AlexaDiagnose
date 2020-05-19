@@ -45,20 +45,40 @@ public class YesNoIntentHandler implements IntentRequestHandler {
             }
         }
 
-        // Ask another question
-        ArrayList listOfQuestions = (ArrayList) session.get(CONTINUOUS_QUESTION);
+        Object obj = null;
+        try {
 
-        if (listOfQuestions.size() == 0) {
-            session.remove(CONTINUOUS_QUESTION);
-            BeginDiagnosisIntentHandler switchIntent = new BeginDiagnosisIntentHandler();
-            return switchIntent.handle(handlerInput, intentRequest);
+            // Ask another question
+            obj = session.get(CONTINUOUS_QUESTION);
+            if (obj.getClass() == String.class) {
+                if (obj.equals(QUESTION_ANSWERED)) {
+                    BeginDiagnosisIntentHandler switchIntent = new BeginDiagnosisIntentHandler();
+                    return switchIntent.handle(handlerInput, intentRequest);
+                }
+            }
+
+        } catch (Exception e) {
+            return handlerInput.getResponseBuilder()
+                    .withSpeech("Error")
+                    .withReprompt("Error")
+                    .build();
         }
 
+        ArrayList listOfQuestions = (ArrayList) obj;
         LinkedHashMap nextQuestion = (LinkedHashMap) listOfQuestions.remove(0);
+
+
+
+
+        if (listOfQuestions.size() == 0) {
+            session.put(CONTINUOUS_QUESTION, QUESTION_ANSWERED);
+        }
 
         String nextQuestionText = (String) nextQuestion.get("name");
         String nextQuestionId = (String) nextQuestion.get("id");
+
         session.put(JUST_ASKED, nextQuestionId);
+
 
         return handlerInput.getResponseBuilder()
                 .withSpeech(nextQuestionText)
