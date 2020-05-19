@@ -18,6 +18,8 @@ public class SessionEndedHandler implements SessionEndedRequestHandler {
     @Override
     public Optional<Response> handle(HandlerInput handlerInput, SessionEndedRequest request) {
         // any cleanup logic goes here
-        return handlerInput.getResponseBuilder().build();
+        return handlerInput.getResponseBuilder()
+                .withSpeech("Ending session, bye.")
+                .build();
     }
 }
