@@ -16,6 +16,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 import static com.hlev1.alexaDiagnose.utils.SessionStorage.*;
@@ -29,32 +30,53 @@ public class BeginDiagnosisIntentHandler implements IntentRequestHandler {
 
     @Override
     public Optional<Response> handle(HandlerInput handlerInput, IntentRequest intentRequest) {
-        DialogState dialog = intentRequest.getDialogState();
         Map session = handlerInput.getAttributesManager().getSessionAttributes();
-
-        if (!dialog.getValue().toString().equals("COMPLETED")) {
-
-            Intent thisIntent = intentRequest.getIntent();
-            return handlerInput.getResponseBuilder()
-                    .addDelegateDirective(thisIntent)
-                    .build();
-        }
-
+        String age = "";
+        String gender = "";
         String questionType = "";
         JSONObject questionObj = null;
         JSONArray listOfQuestions = null;
+        String evidence = "";
 
-        Map slots = intentRequest.getIntent().getSlots();
-        String age = ((Slot) slots.get("age")).getValue();
-        String gender = ((Slot) slots.get("gender")).getValue();
+
+        // Ask another question
+        Object obj = session.getOrDefault(CONTINUOUS_QUESTION, "");
+        if (obj.getClass() == String.class) {
+            if (obj.equals(QUESTION_ANSWERED)) {
+                ArrayList ev = (ArrayList) session.getOrDefault(EVIDENCE, new ArrayList<>()); // Collect the evidence from a previous question
+                evidence = formatEvidence(ev);
+                age = (String) session.getOrDefault(AGE, "");
+                gender = (String) session.getOrDefault(GENDER, "");
+
+            } else {
+                // Initial dialog run through
+                DialogState dialog = intentRequest.getDialogState();
+
+                if (!dialog.getValue().toString().equals("COMPLETED")) {
+
+                    Intent thisIntent = intentRequest.getIntent();
+                    return handlerInput.getResponseBuilder()
+                            .addDelegateDirective(thisIntent)
+                            .build();
+                } else {
+                    Map slots = intentRequest.getIntent().getSlots();
+                    age = ((Slot) slots.get("age")).getValue();
+                    gender = ((Slot) slots.get("gender")).getValue();
+
+                    session.put(AGE, age);
+                    session.put(GENDER, gender);
+                }
+            }
+        }
+
 
         try {
             JSONObject apiResponse = makePOST("https://api.infermedica.com/covid19/diagnosis",
-                                                Integer.parseInt(age), gender);
+                                                Integer.parseInt(age), gender, evidence);
 
             if ((Boolean) apiResponse.get("should_stop")) {
                 return handlerInput.getResponseBuilder()
-                        .withSpeech("Stopping diagnosis, implementation waiting")
+                        .withSpeech("I've heard enough")
                         .build();
             }
 
@@ -62,19 +84,30 @@ public class BeginDiagnosisIntentHandler implements IntentRequestHandler {
             listOfQuestions = (JSONArray) questionObj.get("items");
             questionType = (String) questionObj.get("type");
 
-
         } catch (Exception e) {
+
+            return handlerInput.getResponseBuilder()
+                    .withSpeech("Error in post")
+                    .withReprompt("Error in post")
+                    .build();
+
             // ERROR HANDLING
-            questionType = "";
-            Boolean shouldStop = false;
+            //questionType = "";
+            //Boolean shouldStop = true;
         }
 
 
         switch (questionType) {
             case "single":
-                break;
+                return handlerInput.getResponseBuilder()
+                        .withSpeech("Single question")
+                        .withReprompt("Single question")
+                        .build();
             case "group_single":
-                break;
+                return handlerInput.getResponseBuilder()
+                        .withSpeech("Group single question")
+                        .withReprompt("Group single question")
+                        .build();
             case "group_multiple":
                 String questionOverview = "Please reply with yes or no to all of the following " +
                         "statements that apply to you. ";
@@ -100,8 +133,9 @@ public class BeginDiagnosisIntentHandler implements IntentRequestHandler {
                 .build();
     }
 
-    public JSONObject makePOST(String url, int age, String gender) throws UnirestException, ParseException {
-        String json = String.format("{\n    \"sex\": \"%s\",\n    \"age\": %d,\n    \"evidence\": []\n}", gender, age);
+    private JSONObject makePOST(String url, int age, String gender, String evidence) throws UnirestException, ParseException {
+        String listString = "[" + String.join(", ", evidence) + "]";
+        String json = String.format("{\n    \"sex\": \"%s\",\n    \"age\": %d,\n    \"evidence\": %s\n}", gender, age, listString);
 
         HttpResponse<String> response = Unirest.post(url)
                 .header("Content-Type", "application/json")
@@ -122,6 +156,21 @@ public class BeginDiagnosisIntentHandler implements IntentRequestHandler {
         JSONObject obj = (JSONObject) parser.parse(response.getBody());
 
         return obj;
+    }
+
+    private String formatEvidence(ArrayList<LinkedHashMap> evidence) {
+        String out = "[";
+        for (int i = 0; i < evidence.size(); i++) {
+            LinkedHashMap h = evidence.get(i);
+            String s = String.format("{\"id\": \"%s\", \"choice_id\": \"%s\"},", h.get("id"), h.get("choice_id"));
+
+            if (i == evidence.size() - 1) {
+                s = s.substring(0, s.length() - 1);
+            }
+            out += s;
+        }
+
+        return out + "]";
     }
 
 }
