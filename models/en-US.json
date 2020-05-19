@@ -25,9 +25,7 @@
             "can you diagnose my symptoms",
             "can you diagnose my symptoms please",
             "can you diagnose me",
-            "can you diagnose me please",
-            "I am {gender}",
-            "I am a {gender}"
+            "can you diagnose me please"
           ]
         },
         {
@@ -40,25 +38,18 @@
           "name": "AMAZON.NoIntent"
         },
         {
-          "name": "AMAZON.HelpIntent"
+          "name": "AMAZON.HelpIntent",
+          "samples": [
+            "I'm not sure",
+            "Im not sure",
+            "I dont know"
+          ]
         },
         {
           "name": "AMAZON.StopIntent"
         },
         {
           "name": "AMAZON.CancelIntent"
-        },
-        {
-          "name": "GroupMultipleQIntent",
-          "slots": [
-            {
-              "name": "answer",
-              "type": "BOOLEAN"
-            }
-          ],
-          "samples": [
-            "{answer}"
-          ]
         },
         {
           "name": "GroupSingleQIntent",
