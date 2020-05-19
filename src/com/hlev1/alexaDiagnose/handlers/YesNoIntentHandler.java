@@ -32,7 +32,7 @@ public class YesNoIntentHandler implements IntentRequestHandler {
             String qId = (String) session.remove(JUST_ASKED);
             String answer = intentRequest.getIntent().getName().equals("AMAZON.YesIntent") ? "present" : "absent";
 
-            JSONArray evidence = (JSONArray) session.getOrDefault(EVIDENCE, new JSONArray());
+            ArrayList evidence = (ArrayList) session.getOrDefault(EVIDENCE, new ArrayList());
             JSONObject newEvidence = new JSONObject();
             newEvidence.put("id", qId);
             newEvidence.put("choice_id", answer);
