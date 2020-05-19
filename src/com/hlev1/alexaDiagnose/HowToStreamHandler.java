@@ -17,18 +17,20 @@ public class HowToStreamHandler extends SkillStreamHandler {
         return Skills.standard()
                 .addRequestHandlers(
                         new LaunchHandler(),
-                        //new ProfileSelectorIntentHandler(),
-                        //new CreateProfileIntentHandler(),
-                        new HelpIntentHandler(),
-                        new AgeIntentHandler(),
+                        new FallbackIntentHandler(),
                         new BeginDiagnosisIntentHandler(),
-                        new SingleQIntentHandler(),
-                        new GroupSingleQIntentHandler(),
-                        new GroupMultipleQIntentHandler(),
+                        new YesNoIntentHandler(),
+                        new HelpIntentHandler(),
                         new RepeatIntentHandler(),
                         new ExitIntentHandler(),
                         new ErrorHandler(),
                         new SessionEndedHandler()
+                        //new AgeIntentHandler(),
+                        //new ProfileSelectorIntentHandler(),
+                        //new CreateProfileIntentHandler(),
+                        //new SingleQIntentHandler(),
+                        //new GroupSingleQIntentHandler(),
+                        //new GroupMultipleQIntentHandler(),
                 )
                 // Add your skill id below
                 // .withSkillId("")
