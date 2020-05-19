@@ -20,12 +20,8 @@ public class HelpIntentHandler implements IntentRequestHandler {
     @Override
     public Optional<Response> handle(HandlerInput handlerInput, IntentRequest intentRequest) {
         final ResourceBundle messages = SkillUtils.getResourceBundle(handlerInput, "Messages");
-        final String item = SkillUtils.getResourceBundle(handlerInput, "Recipes").getKeys().nextElement();
-        final String speechText = String.format(messages.getString("HELP_MESSAGE"), item);
-        final String repromptText = String.format(messages.getString("HELP_REPROMPT"), item);
-        final Map<String, Object> sessionAttributes = handlerInput.getAttributesManager().getSessionAttributes();
-        sessionAttributes.put("speakOutput", speechText);
-        sessionAttributes.put("repromptSpeech", repromptText);
+        final String speechText = messages.getString("HELP_MESSAGE");
+        final String repromptText = messages.getString("HELP_REPROMPT");
 
         return handlerInput.getResponseBuilder()
                 .withSpeech(speechText)
