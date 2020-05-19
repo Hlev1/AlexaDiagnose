@@ -88,6 +88,7 @@ public class BeginDiagnosisIntentHandler implements IntentRequestHandler {
 
                 return handlerInput.getResponseBuilder()
                         .withSpeech(questionOverview + nextQuestionText)
+                        .withReprompt("well? yes or no")
                         .build();
             default:
                 break;

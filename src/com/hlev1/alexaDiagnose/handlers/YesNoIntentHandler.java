@@ -62,6 +62,7 @@ public class YesNoIntentHandler implements IntentRequestHandler {
 
         return handlerInput.getResponseBuilder()
                 .withSpeech(nextQuestionText)
+                .withReprompt("Well? yes or no.")
                 .build();
 
     }
