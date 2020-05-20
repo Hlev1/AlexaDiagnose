@@ -36,7 +36,7 @@ public class BeginDiagnosisIntentHandler implements IntentRequestHandler {
         String questionType = "";
         JSONObject questionObj = null;
         JSONArray listOfQuestions = null;
-        String evidence = "";
+        String evidence = "[]";
 
 
         // Ask another question
@@ -134,8 +134,7 @@ public class BeginDiagnosisIntentHandler implements IntentRequestHandler {
     }
 
     private JSONObject makePOST(String url, int age, String gender, String evidence) throws UnirestException, ParseException {
-        String listString = "[" + String.join(", ", evidence) + "]";
-        String json = String.format("{\n    \"sex\": \"%s\",\n    \"age\": %d,\n    \"evidence\": %s\n}", gender, age, listString);
+        String json = String.format("{\n    \"sex\": \"%s\",\n    \"age\": %d,\n    \"evidence\": %s\n}", gender, age, evidence);
 
         HttpResponse<String> response = Unirest.post(url)
                 .header("Content-Type", "application/json")
