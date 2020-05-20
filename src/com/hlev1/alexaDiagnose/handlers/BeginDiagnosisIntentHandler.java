@@ -96,25 +96,37 @@ public class BeginDiagnosisIntentHandler implements IntentRequestHandler {
             //Boolean shouldStop = true;
         }
 
+        JSONObject nextQuestion;
+        String nextQuestionText;
+        String nextQuestionId;
 
         switch (questionType) {
             case "single":
+                nextQuestion = (JSONObject) listOfQuestions.remove(0);
+                nextQuestionText = (String) nextQuestion.get("name");
+                nextQuestionId = (String) nextQuestion.get("id");
+
+                session.put(CONTINUOUS_QUESTION, QUESTION_ANSWERED);
+                session.put(JUST_ASKED, nextQuestionId);
+
                 return handlerInput.getResponseBuilder()
-                        .withSpeech("Single question")
-                        .withReprompt("Single question")
+                        .withSpeech(nextQuestionText)
+                        .withReprompt("well? yes or no")
                         .build();
+
             case "group_single":
                 return handlerInput.getResponseBuilder()
                         .withSpeech("Group single question")
                         .withReprompt("Group single question")
                         .build();
+
             case "group_multiple":
                 String questionOverview = "Please reply with yes or no to all of the following " +
                         "statements that apply to you. ";
 
-                JSONObject nextQuestion = (JSONObject) listOfQuestions.remove(0);
-                String nextQuestionText = (String) nextQuestion.get("name");
-                String nextQuestionId = (String) nextQuestion.get("id");
+                nextQuestion = (JSONObject) listOfQuestions.remove(0);
+                nextQuestionText = (String) nextQuestion.get("name");
+                nextQuestionId = (String) nextQuestion.get("id");
 
                 session.put(CONTINUOUS_QUESTION, listOfQuestions);
                 session.put(JUST_ASKED, nextQuestionId);
@@ -123,6 +135,7 @@ public class BeginDiagnosisIntentHandler implements IntentRequestHandler {
                         .withSpeech(questionOverview + nextQuestionText)
                         .withReprompt("well? yes or no")
                         .build();
+
             default:
                 break;
         }
