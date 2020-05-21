@@ -75,8 +75,13 @@ public class BeginDiagnosisIntentHandler implements IntentRequestHandler {
                                                 Integer.parseInt(age), gender, evidence);
 
             if ((Boolean) apiResponse.get("should_stop")) {
+                JSONObject triageResponse = makePOST("https://api.infermedica.com/covid19/triage",
+                                                Integer.parseInt(age), gender, evidence);
+
+                String advice = (String) triageResponse.get("description");
+
                 return handlerInput.getResponseBuilder()
-                        .withSpeech("I've heard enough")
+                        .withSpeech(advice)
                         .build();
             }
 
@@ -85,20 +90,16 @@ public class BeginDiagnosisIntentHandler implements IntentRequestHandler {
             questionType = (String) questionObj.get("type");
 
         } catch (Exception e) {
-
-            return handlerInput.getResponseBuilder()
-                    .withSpeech("Error in post")
-                    .withReprompt("Error in post")
-                    .build();
-
             // ERROR HANDLING
-            //questionType = "";
-            //Boolean shouldStop = true;
+            return handlerInput.getResponseBuilder()
+                    .withSpeech("I've heard enough")
+                    .build();
         }
 
         JSONObject nextQuestion;
         String nextQuestionText;
         String nextQuestionId;
+        String questionOverview;
 
         switch (questionType) {
             case "single":
@@ -116,15 +117,36 @@ public class BeginDiagnosisIntentHandler implements IntentRequestHandler {
                         .build();
 
             case "group_single":
+
+                nextQuestionText = (String) questionObj.get("text");
+
+                ArrayList askedOptions = new ArrayList();
+
+                for (int i = 0; i < listOfQuestions.size(); i++) {
+                    JSONObject nextOption = (JSONObject) listOfQuestions.get(i);
+                    nextOption.remove("choices");
+                    askedOptions.add(nextOption);
+
+                    String nextOptionText = ((String) nextOption.get("name")).replaceAll("\\(.*?\\)","");
+                    String nextOptionLabel = getCharForNumber(i+1);
+
+                    String and = (i == listOfQuestions.size() - 1) ? "And " : "";
+
+                    nextQuestionText += "\n";
+                    nextQuestionText += and + nextOptionLabel + ", ";
+                    nextQuestionText += nextOptionText + ".";
+                }
+
                 session.put(CONTINUOUS_QUESTION, askedOptions);
                 session.put(JUST_ASKED_Q, nextQuestionText);
+
                 return handlerInput.getResponseBuilder()
-                        .withSpeech("Group single question")
-                        .withReprompt("Group single question")
+                        .withSpeech(nextQuestionText)
+                        .withReprompt("Please choose one.")
                         .build();
 
             case "group_multiple":
-                String questionOverview = "Please reply with yes or no to all of the following " +
+                questionOverview = "Please reply with yes or no to all of the following " +
                         "statements that apply to you. ";
 
                 nextQuestion = (JSONObject) listOfQuestions.remove(0);
@@ -187,6 +209,10 @@ public class BeginDiagnosisIntentHandler implements IntentRequestHandler {
         }
 
         return out + "]";
+    }
+
+    private String getCharForNumber(int i) {
+        return i > 0 && i < 27 ? (String.valueOf((char)(i + 64))).toUpperCase() : null;
     }
 
 }
