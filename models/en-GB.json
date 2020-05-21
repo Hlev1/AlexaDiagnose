@@ -55,6 +55,19 @@
         },
         {
           "name": "AMAZON.CancelIntent"
+        },
+        {
+          "name": "MultipleChoiceIntent",
+          "slots": [
+            {
+              "name": "answer",
+              "type": "LETTER"
+            }
+          ],
+          "samples": [
+            "{answer}",
+            "I choose {answer}"
+          ]
         }
       ],
       "types": [
@@ -76,6 +89,67 @@
                 "synonyms": [
                   "boy",
                   "man"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "LETTER",
+          "values": [
+            {
+              "name": {
+                "value": "a",
+                "synonyms": [
+                  "one"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "b",
+                "synonyms": [
+                  "two"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "c",
+                "synonyms": [
+                  "three"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "d",
+                "synonyms": [
+                  "four"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "e",
+                "synonyms": [
+                  "five"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "f",
+                "synonyms": [
+                  "six"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "g",
+                "synonyms": [
+                  "seven"
                 ]
               }
             }
