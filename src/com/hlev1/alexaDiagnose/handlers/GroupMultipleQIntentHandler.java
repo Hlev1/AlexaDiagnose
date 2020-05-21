@@ -28,8 +28,8 @@ public class GroupMultipleQIntentHandler implements IntentRequestHandler {
         Map slots = intentRequest.getIntent().getSlots();
         if (slots.containsKey("answer")) {
             String answer = ((Slot) slots.get("answer")).getValue();
-            String question = (String) session.get(JUST_ASKED);
-            session.remove(JUST_ASKED);
+            String question = (String) session.get(JUST_ASKED_ID);
+            session.remove(JUST_ASKED_ID);
 
             JSONArray evidence = (JSONArray) session.getOrDefault(EVIDENCE, new JSONArray());
 
@@ -55,7 +55,7 @@ public class GroupMultipleQIntentHandler implements IntentRequestHandler {
             String questionText = question.get("name").toString();
             String questionId = question.get("id").toString();
 
-            session.put(JUST_ASKED, questionId);
+            session.put(JUST_ASKED_ID, questionId);
 
             return handlerInput.getResponseBuilder()
                     .withSpeech(questionText)

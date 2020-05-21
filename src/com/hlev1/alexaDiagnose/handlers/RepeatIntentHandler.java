@@ -21,6 +21,8 @@ import com.amazon.ask.model.Response;
 import java.util.Map;
 import java.util.Optional;
 
+import static com.hlev1.alexaDiagnose.utils.SessionStorage.JUST_ASKED_Q;
+
 public class RepeatIntentHandler implements IntentRequestHandler {
 
     @Override
@@ -30,10 +32,11 @@ public class RepeatIntentHandler implements IntentRequestHandler {
 
     @Override
     public Optional<Response> handle(HandlerInput handlerInput, IntentRequest intentRequest) {
-        final Map<String, Object> sessionAttributes = handlerInput.getAttributesManager().getSessionAttributes();
+        Map session = handlerInput.getAttributesManager().getSessionAttributes();
+        String text = (String) session.get(JUST_ASKED_Q);
         return handlerInput.getResponseBuilder()
-                .withSpeech(String.valueOf(sessionAttributes.get("speakOutput")))
-                .withReprompt(String.valueOf(sessionAttributes.get("repromptSpeech")))
+                .withSpeech(text)
+                .withReprompt(text)
                 .build();
     }
 }

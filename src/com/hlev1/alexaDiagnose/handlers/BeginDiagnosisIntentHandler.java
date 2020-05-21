@@ -107,7 +107,8 @@ public class BeginDiagnosisIntentHandler implements IntentRequestHandler {
                 nextQuestionId = (String) nextQuestion.get("id");
 
                 session.put(CONTINUOUS_QUESTION, QUESTION_ANSWERED);
-                session.put(JUST_ASKED, nextQuestionId);
+                session.put(JUST_ASKED_ID, nextQuestionId);
+                session.put(JUST_ASKED_Q, nextQuestionText);
 
                 return handlerInput.getResponseBuilder()
                         .withSpeech(nextQuestionText)
@@ -115,6 +116,8 @@ public class BeginDiagnosisIntentHandler implements IntentRequestHandler {
                         .build();
 
             case "group_single":
+                session.put(CONTINUOUS_QUESTION, askedOptions);
+                session.put(JUST_ASKED_Q, nextQuestionText);
                 return handlerInput.getResponseBuilder()
                         .withSpeech("Group single question")
                         .withReprompt("Group single question")
@@ -129,7 +132,8 @@ public class BeginDiagnosisIntentHandler implements IntentRequestHandler {
                 nextQuestionId = (String) nextQuestion.get("id");
 
                 session.put(CONTINUOUS_QUESTION, listOfQuestions);
-                session.put(JUST_ASKED, nextQuestionId);
+                session.put(JUST_ASKED_ID, nextQuestionId);
+                session.put(JUST_ASKED_Q, nextQuestionText);
 
                 return handlerInput.getResponseBuilder()
                         .withSpeech(questionOverview + nextQuestionText)
