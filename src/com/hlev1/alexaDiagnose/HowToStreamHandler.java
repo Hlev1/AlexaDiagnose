@@ -20,6 +20,7 @@ public class HowToStreamHandler extends SkillStreamHandler {
                         new FallbackIntentHandler(),
                         new BeginDiagnosisIntentHandler(),
                         new YesNoIntentHandler(),
+                        new MultipleChoiceIntentHandler(),
                         new HelpIntentHandler(),
                         new RepeatIntentHandler(),
                         new ExitIntentHandler(),
