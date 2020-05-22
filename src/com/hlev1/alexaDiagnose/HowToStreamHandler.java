@@ -29,9 +29,6 @@ public class HowToStreamHandler extends SkillStreamHandler {
                 )
                 // Add your skill id below
                 // .withSkillId("")
-                //.withTableName("profiles")
-                //.withAutoCreateTable(true)
-                //.withDynamoDbClient(AmazonDynamoDBClientBuilder.standard().build())
                 .build();
     }
 
