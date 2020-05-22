@@ -18,6 +18,7 @@ import org.json.simple.parser.ParseException;
 
 import java.lang.reflect.Array;
 import java.util.*;
+import static java.util.Map.entry;
 
 import static com.hlev1.alexaDiagnose.utils.SessionStorage.*;
 
@@ -92,7 +93,8 @@ public class BeginDiagnosisIntentHandler implements IntentRequestHandler {
         } catch (Exception e) {
             // ERROR HANDLING
             return handlerInput.getResponseBuilder()
-                    .withSpeech("I've heard enough")
+                    .withSpeech(e.getMessage())
+                    .withReprompt("I've heard enough")
                     .build();
         }
 
@@ -121,6 +123,7 @@ public class BeginDiagnosisIntentHandler implements IntentRequestHandler {
                 nextQuestionText = (String) questionObj.get("text");
 
                 ArrayList askedOptions = new ArrayList();
+                final String[] numNames = {"zero","one","two","three","four","five","six","seven","eight","nine","ten"};
 
                 for (int i = 0; i < listOfQuestions.size(); i++) {
                     JSONObject nextOption = (JSONObject) listOfQuestions.get(i);
@@ -128,7 +131,7 @@ public class BeginDiagnosisIntentHandler implements IntentRequestHandler {
                     askedOptions.add(nextOption);
 
                     String nextOptionText = ((String) nextOption.get("name")).replaceAll("\\(.*?\\)","");
-                    String nextOptionLabel = getCharForNumber(i+1);
+                    String nextOptionLabel = numNames[i+1];
 
                     String and = (i == listOfQuestions.size() - 1) ? "And " : "";
 
