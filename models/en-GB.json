@@ -30,7 +30,9 @@
             "can you diagnose me",
             "can you diagnose me please",
             "I am {gender}",
-            "I am a {gender}"
+            "I am a {gender}",
+            "I am {age}",
+            "I am {age} years old"
           ]
         },
         {
@@ -61,7 +63,7 @@
           "slots": [
             {
               "name": "answer",
-              "type": "LETTER"
+              "type": "AMAZON.NUMBER"
             }
           ],
           "samples": [
@@ -89,67 +91,6 @@
                 "synonyms": [
                   "boy",
                   "man"
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "name": "LETTER",
-          "values": [
-            {
-              "name": {
-                "value": "a",
-                "synonyms": [
-                  "one"
-                ]
-              }
-            },
-            {
-              "name": {
-                "value": "b",
-                "synonyms": [
-                  "two"
-                ]
-              }
-            },
-            {
-              "name": {
-                "value": "c",
-                "synonyms": [
-                  "three"
-                ]
-              }
-            },
-            {
-              "name": {
-                "value": "d",
-                "synonyms": [
-                  "four"
-                ]
-              }
-            },
-            {
-              "name": {
-                "value": "e",
-                "synonyms": [
-                  "five"
-                ]
-              }
-            },
-            {
-              "name": {
-                "value": "f",
-                "synonyms": [
-                  "six"
-                ]
-              }
-            },
-            {
-              "name": {
-                "value": "g",
-                "synonyms": [
-                  "seven"
                 ]
               }
             }
