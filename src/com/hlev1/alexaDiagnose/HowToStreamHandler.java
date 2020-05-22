@@ -26,12 +26,6 @@ public class HowToStreamHandler extends SkillStreamHandler {
                         new ExitIntentHandler(),
                         new ErrorHandler(),
                         new SessionEndedHandler()
-                        //new AgeIntentHandler(),
-                        //new ProfileSelectorIntentHandler(),
-                        //new CreateProfileIntentHandler(),
-                        //new SingleQIntentHandler(),
-                        //new GroupSingleQIntentHandler(),
-                        //new GroupMultipleQIntentHandler(),
                 )
                 // Add your skill id below
                 // .withSkillId("")
