@@ -11,8 +11,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import static com.hlev1.alexaDiagnose.utils.SessionStorage.CONTINUOUS_QUESTION;
-import static com.hlev1.alexaDiagnose.utils.SessionStorage.EVIDENCE;
+import static com.hlev1.alexaDiagnose.utils.SessionStorage.*;
 
 public class MultipleChoiceIntentHandler implements IntentRequestHandler {
     @Override
@@ -27,11 +26,11 @@ public class MultipleChoiceIntentHandler implements IntentRequestHandler {
 
         Slot slot = intentRequest.getIntent().getSlots().get("answer");
         ArrayList question = (ArrayList) session.get(CONTINUOUS_QUESTION);
-        char answer = slot.getValue().toLowerCase().charAt(0);
-        int i = answer - 'a';
+        int answer = Integer.parseInt(slot.getValue()) - 1;
 
-        LinkedHashMap newEvidence = (LinkedHashMap) question.get(i);
+        LinkedHashMap newEvidence = (LinkedHashMap) question.get(answer);
         newEvidence.remove("name");
+        newEvidence.put("choice_id", "present");
         if (newEvidence.containsKey("explanation")) { newEvidence.remove("name"); }
 
         evidence.add(newEvidence);
@@ -40,6 +39,8 @@ public class MultipleChoiceIntentHandler implements IntentRequestHandler {
         if (evidence.size() <= 1) {
             session.put(EVIDENCE, evidence);
         }
+
+        session.put(CONTINUOUS_QUESTION, QUESTION_ANSWERED);
 
         BeginDiagnosisIntentHandler switchIntent = new BeginDiagnosisIntentHandler();
         return switchIntent.handle(handlerInput, intentRequest);
