@@ -2,9 +2,15 @@
   "interactionModel": {
     "languageModel": {
       "invocationName": "diagnose",
+      "modelConfiguration": {
+        "fallbackIntentSensitivity": {
+          "level": "LOW"
+        }
+      },
       "intents": [
         {
-          "name": "AMAZON.FallbackIntent"
+          "name": "AMAZON.FallbackIntent",
+          "samples": []
         },
         {
           "name": "BeginDiagnosisIntent",
@@ -15,7 +21,19 @@
             },
             {
               "name": "gender",
-              "type": "GENDER"
+              "type": "GENDER",
+              "samples": [
+                "I am a girl",
+                "I am a boy",
+                "girl",
+                "boy",
+                "I am a female",
+                "I am female",
+                "I am a male",
+                "I am male",
+                "female",
+                "male"
+              ]
             }
           ],
           "samples": [
@@ -36,13 +54,16 @@
           ]
         },
         {
-          "name": "AMAZON.RepeatIntent"
+          "name": "AMAZON.RepeatIntent",
+          "samples": []
         },
         {
-          "name": "AMAZON.YesIntent"
+          "name": "AMAZON.YesIntent",
+          "samples": []
         },
         {
-          "name": "AMAZON.NoIntent"
+          "name": "AMAZON.NoIntent",
+          "samples": []
         },
         {
           "name": "AMAZON.HelpIntent",
@@ -53,10 +74,12 @@
           ]
         },
         {
-          "name": "AMAZON.StopIntent"
+          "name": "AMAZON.StopIntent",
+          "samples": []
         },
         {
-          "name": "AMAZON.CancelIntent"
+          "name": "AMAZON.CancelIntent",
+          "samples": []
         },
         {
           "name": "MultipleChoiceIntent",
@@ -70,6 +93,10 @@
             "{answer}",
             "I choose {answer}"
           ]
+        },
+        {
+          "name": "AMAZON.NavigateHomeIntent",
+          "samples": []
         }
       ],
       "types": [
@@ -141,10 +168,10 @@
       ]
     },
     "dialog": {
-      "delegationStrategy": "ALWAYS",
       "intents": [
         {
           "name": "BeginDiagnosisIntent",
+          "confirmationRequired": false,
           "prompts": {},
           "slots": [
             {
@@ -154,7 +181,14 @@
               "elicitationRequired": true,
               "prompts": {
                 "elicitation": "Elicit.Slot.1323207333291.854898796228"
-              }
+              },
+              "validations": [
+                {
+                  "type": "isLessThan",
+                  "prompt": "Slot.Validation.1514474544173.872625360360.272791247114",
+                  "value": "110"
+                }
+              ]
             },
             {
               "name": "gender",
@@ -163,11 +197,18 @@
               "elicitationRequired": true,
               "prompts": {
                 "elicitation": "Elicit.Slot.1323207333291.563366041005"
-              }
+              },
+              "validations": [
+                {
+                  "type": "hasEntityResolutionMatch",
+                  "prompt": "Slot.Validation.951087147386.890057011943.992743927032"
+                }
+              ]
             }
           ]
         }
-      ]
+      ],
+      "delegationStrategy": "ALWAYS"
     },
     "prompts": [
       {
@@ -176,6 +217,15 @@
           {
             "type": "PlainText",
             "value": "How old are you?"
+          }
+        ]
+      },
+      {
+        "id": "Slot.Validation.1514474544173.872625360360.272791247114",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "A sensible age please"
           }
         ]
       },
@@ -194,6 +244,23 @@
           {
             "type": "PlainText",
             "value": "What is your name?"
+          }
+        ]
+      },
+      {
+        "id": "Slot.Validation.951087147386.890057011943.992743927032",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "I didnt catch that"
+          },
+          {
+            "type": "PlainText",
+            "value": "Try that again please"
+          },
+          {
+            "type": "PlainText",
+            "value": "That is not a gender, try again please"
           }
         ]
       }
