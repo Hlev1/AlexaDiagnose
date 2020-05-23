@@ -43,6 +43,9 @@ public class YesNoIntentHandler implements IntentRequestHandler {
             if (evidence.size() <= 1) {
                 session.put(EVIDENCE, evidence);
             }
+        } else {
+            HelpIntentHandler help = new HelpIntentHandler();
+            return help.handle(handlerInput, intentRequest);
         }
 
         // Ask another question
