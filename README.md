@@ -1,6 +1,6 @@
 # Alexa Diagnose
 
-![alt text](Harry_Alexa_Diagnose_Logo/PNG/Alexa_Diagnose_Colour.png)
+![alt text](src/resources/images/Logo/PNG/Alexa_Diagnose_Colour.png)
 
 Alexa Diagnose is an Alexa skill that asks a patient a series of questions. Once enough information has been gathered, the Alexa gives the patient a diagnosis 
 regarding how likely it is that they have COVID19. This application is in no way meant to provide any sort of clinical diagnosis, nor to replace any medical advice. 
