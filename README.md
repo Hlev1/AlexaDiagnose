@@ -1,7 +1,7 @@
 # Alexa Diagnose
 
 ![alt text](src/resources/images/Logo/PNG/Alexa_Diagnose_Colour.png)
-*Artwork by [Ross Milnes](www.behance.net/RossMilnes)*
+*Artwork by [Ross Milnes](https://www.behance.net/RossMilnes)*
 
 Alexa Diagnose is an Alexa skill that asks a patient a series of questions. Once enough information has been gathered, the Alexa gives the patient a diagnosis 
 regarding how likely it is that they have COVID19. This application is in no way meant to provide any sort of clinical diagnosis, nor to replace any medical advice. 
