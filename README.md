@@ -1,6 +1,11 @@
-# Alexa Patient
+# Alexa Diagnose
 
-This project contains source code and supporting files for a serverless application that you can deploy with the SAM CLI. It includes the following files and folders.
+![alt text](Harry_Alexa_Diagnose_Logo/PNG/Alexa_Diagnose_Colour.png)
+
+Alexa Diagnose is an Alexa skill that asks a patient a series of questions. Once enough information has been gathered, the Alexa gives the patient a diagnosis 
+regarding how likely it is that they have COVID19. This application is in no way meant to provide any sort of clinical diagnosis, nor to replace any medical advice. 
+The project is meant to allow a patient to be diagnosed in a similar way to how they would be diagnosed verbally at the doctors, but in the comfort and safety of their own home.
+
 
 - AlexaDiagnose/src/com/hlev1/alexaDiagnose - Code for the application's Lambda function.
 - events - Invocation events that you can use to invoke the function.
